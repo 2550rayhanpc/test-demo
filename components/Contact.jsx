@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const FORMSPREE_URL = "https://formspree.io/f/xkjnndkk"; // এখানে তোমার Form ID বসাও
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,14 +17,29 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setStatus("idle"), 4000);
-    }, 1200);
+
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: new FormData(e.target),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      setStatus("error");
+    }
   };
 
   return (
@@ -67,6 +84,8 @@ export default function Contact() {
 
           <form
             onSubmit={handleSubmit}
+            action={FORMSPREE_URL}
+            method="POST"
             className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-black/20 backdrop-blur-sm sm:p-8 lg:col-span-3"
           >
             <div className="grid gap-5 sm:grid-cols-2">
@@ -122,6 +141,12 @@ export default function Contact() {
             {status === "success" && (
               <div className="mt-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-sm text-emerald-300">
                 ✅ Message sent! I&apos;ll get back to you soon.
+              </div>
+            )}
+
+            {status === "error" && (
+              <div className="mt-4 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-sm text-red-300">
+                ❌ Something went wrong. Please try again.
               </div>
             )}
           </form>
