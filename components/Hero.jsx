@@ -29,13 +29,23 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen items-center justify-center px-4 pt-20 text-center"
     >
-      {/* Background glows */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-cyan-500/15 blur-[120px] sm:h-96 sm:w-96" />
-        <div className="absolute -right-20 bottom-20 h-80 w-80 rounded-full bg-indigo-500/15 blur-[120px] sm:h-96 sm:w-96" />
-      </div>
-
       <div className="relative z-10 mx-auto max-w-4xl">
+        
+        {/* Profile Image */}
+        <div className="relative mx-auto mb-8 h-40 w-40 sm:h-52 sm:w-52">
+          <div className="h-full w-full overflow-hidden rounded-full border-4 border-cyan-400/30 shadow-2xl shadow-cyan-500/20">
+            <img
+              src="/profile.jpg"
+              alt="Rayhan Islam"
+              className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+            />
+          </div>
+          {/* Animated ring */}
+          <div className="absolute inset-0 rounded-full border-2 border-cyan-400/20 animate-ping" />
+          {/* Glow behind */}
+          <div className="absolute -inset-4 -z-10 rounded-full bg-cyan-500/20 blur-2xl" />
+        </div>
+
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1.5 text-sm font-medium text-cyan-300">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
