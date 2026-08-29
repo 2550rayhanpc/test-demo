@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: "Rayhan Islam | Full-Stack Web Developer",
   description:
